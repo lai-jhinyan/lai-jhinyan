@@ -1,6 +1,6 @@
 # 🚀 Hi, I'm Jan | Full-Stack & AI Infrastructure Engineer
 
-我是一位擁有兩年一線實戰經驗的**全端與 AI 架構工程師**。我專精於 Flutter 跨平台前端開發，並具備建構 Python (FastAPI / Flask) 非同步微服務後端、雲端基礎設施部署，以及本地大型語言模型 (LLM) 推論整合的完整經驗。
+我是一位擁有兩年一線實戰經驗的**全端與 AI 架構工程師**。我專精於 Flutter 跨平台行動端開發，並具備建構 Python (FastAPI / Flask) 非同步微服務後端、雲端基礎設施部署，以及本地大型語言模型 (LLM) 推論整合的完整經驗。
 
 我具備獨立產品的交付能力（From 0 to 1 Delivery），能一手包辦從雲端架構、AI 數據管線、到雙平台上架管理與前端流暢體驗。
 
@@ -30,12 +30,19 @@
 
 ## 🔥 Live Demo / 作品傳送門 (Portals)
 
-以下為我獨立開發與參與核心架構的產品展示，歡迎親自點擊體驗：
+以下為我獨立開發與參與核心架構的正式產品，歡迎親自體驗產品的完整交付品質：
 
-- 🌐 **品牌官方網站 (Web)**：[👉 點此前往 Wix 線上展示網頁](https://your-wix-website-link.com)
-- 💬 **AI 情感陪伴機器人 (LINE Bot)**：[👉 點此加入好友即時互動](https://your-line-bot-link.com)
-- 📱 **行動端應用軟體 (App)**：[👉 下載 Android APK / iOS TestFlight 測試連結](https://your-app-download-link.com)
-  *(備註：若測試載點因版本審查中暫不開放，可在技術面試現場由我直接進行實機功能演示)*
+### 🌐 Web & Chatbot 系統
+- **憂隔 Youge 品牌官方網站**：[👉 點此前往 Wix 線上展示網頁](https://www.youge.org/)
+- **AI 情感陪伴機器人 (LINE Bot)**：[👉 點此加入好友即時互動](https://lin.ee/ZKP5Vkn)
+
+### 📱 憂隔 Youge - AI 情感陪伴應用程式 (App)
+- **iOS 平台**：[🍏 點此前往 App Store 下載](https://apps.apple.com/tw/app/%E6%86%82%E9%9A%94/id6752664178)
+- **Android 平台**：[🤖 點此前往 Google Play 下載](https://play.google.com/store/apps/details?id=com.datzuo.youge.android&pcampaignid=web_share)
+
+### 📱 Pestologic - 企業級物聯網與定位系統 (App)
+- **iOS 平台**：[🍏 點此前往 App Store 下載](https://apps.apple.com/tw/app/pestologic/id6759633666)
+- **Android 平台**：[🤖 點此前往 Google Play 下載](https://play.google.com/store/apps/details?id=com.hysia.pestologic&pcampaignid=web_share)
 
 ---
 
@@ -61,7 +68,7 @@ graph TD
     
     App -. 效能與推播監測 .-> Crash
 ```
-💡 實務案例研究與問題解決 (Case Studies)
+### 💡 實務案例研究與問題解決 (Case Studies)
 📌 1. Python FastAPI 高並發 Webhook 與即時狀態機調度
 問題背景：在串接通訊平台（LINE Developers）與後端 AI 模型時，高流量高並發的 Webhook 請求容易造成後端阻塞，導致用戶端體驗延遲。
 
@@ -79,23 +86,21 @@ graph TD
 📌 3. 雙平台商店上架管理與生態圈應變
 實務經驗：熟知 Apple 審查規範中的隱私權宣告，以及 Android targetSdkVersion 權限變更。
 
-應變案例：曾遇過因硬體權限（Background GPS）導致的商店退件，我透過重新梳理 Permission_handler 的引導流程，在用戶初次觸發核心功能前，設計「前置型權現說明彈窗（Pre-permission Dialog）」，不僅成功通過商店審查，更將用戶權限開啟率提升了 25%。
+應變案例：曾遇過因硬體權限（Background GPS）導致的商店退件，我透過重新梳理 Permission_handler 的引導流程，在用戶初次觸發核心功能前，設計「前置型權限說明彈窗（Pre-permission Dialog）」，不僅成功通過商店審查，更將用戶權限開啟率提升了 25%。
 
 📌 4. 前端狀態管理與動態 UI 記憶體回收 (Riverpod AutoDispose)
 實務經驗：在面臨多重非同步數據流（如即時地圖坐標串流、即時對話流）時，若未妥善管理 Lifecycle，極易造成 Widget 頻繁 Rebuild 導致卡頓與耗電。我運用 Provider.autoDispose 結合異步監聽鏈，在用戶切換離開核心頁面時，主動回收非同步記憶體、清空暫存並關閉輸入 UI，從根本杜絕 Memory Leak，維持 App 60 FPS 的絲滑流暢度。
 
-📈 2026 技術擴展與持續演進 (Future Outlook)
-我保持著對技術邊類的強烈好奇心，目前正在深化以下領域，旨在為未來的團隊帶來更多元的架構選擇：
+### 📈 2026 技術擴展與持續演進 (Future Outlook)
+我保持著對技術邊界的強烈好奇心，目前正在深化以下領域，旨在為未來的團隊帶來更多元的架構選擇：
 
 Modern Web Frontend: 深入研習 React.js 生態圈，將行動端的狀態管理與組件化思維無縫遷移至 Web 端，完備全場景開發實力。
 
-AI-Driven Engineering: 全面導入 Claude Code 等前沿 AI 輔輔開發工具，優化並重構自動化開發工作流（AI-assisted workflow），將團隊的研發產出效率極大化。
+AI-Driven Engineering: 全面導入 Claude Code 等前沿 AI 輔助開發工具，優化並重構自動化開發工作流（AI-assisted workflow），將團隊的研發產出效率極大化。
 
-📬 聯絡我 (Contact)
+### 📬 聯絡我 (Contact)
 如果您對我的全端架構設計、團隊協作思維或過往專案細節感興趣，非常歡迎透過以下管道與我聯絡，期待能與優秀的團隊共同打造改變市場的產品！
 
-Email: your.email@example.com
-
-LinkedIn: Jan's LinkedIn Profile
+Email: alex20021009@gmail.com
 
 GitHub: Jan's GitHub
