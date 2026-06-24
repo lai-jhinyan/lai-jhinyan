@@ -104,4 +104,4 @@ graph TD
 如果您對我的全端架構設計、團隊協作思維或過往專案細節感興趣，非常歡迎透過以下管道與我聯絡，期待能與優秀的團隊共同打造改變市場的產品！
 
 * **Email**：[alex20021009@gmail.com](mailto:alex20021009@gmail.com)
-* **GitHub**：[Jan's GitHub Profile](https://github.com/your-username)
+* **GitHub**：[Jan's GitHub Profile](https://github.com/lai-jhinyan/lai-jhinyan)
