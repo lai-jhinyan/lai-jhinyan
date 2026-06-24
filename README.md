@@ -54,7 +54,7 @@
 graph TD
     App[Flutter Mobile App<br>Android / iOS] -- RESTful / WebSockets --> Backend[Python FastAPI / Flask Backend<br>LINE Bot Webhook]
     App -- Real-time Stream --> Supabase[Supabase Cloud DB<br>PostgreSQL & RLS]
-    Backend -- Prompt Streaming --> AIEngine[Local AI 推論引擎<br>Ollama Server]
+    Backend -- Prompt Streaming --> AIEngine[AI API KEY串接<br>本地模型Ollama Server]
     
     subgraph Cloud [GCP & DigitalOcean 雲端基礎設施]
         Backend
@@ -68,39 +68,40 @@ graph TD
     
     App -. 效能與推播監測 .-> Crash
 ```
-### 💡 實務案例研究與問題解決 (Case Studies)
-📌 1. Python FastAPI 高並發 Webhook 與即時狀態機調度
-問題背景：在串接通訊平台（LINE Developers）與後端 AI 模型時，高流量高並發的 Webhook 請求容易造成後端阻塞，導致用戶端體驗延遲。
+## 💡 實務案例研究與問題解決 (Case Studies)
 
-解決方案：利用 FastAPI 的 async/await 非同步事件循環（Event Loop），架設低延遲的 Webhook 伺服器；後端引入狀態機（State Machine）設計模式，將繁重的文本生成或資料運算抽離至背景排程（Background Tasks）。此全端非同步架構經驗，能完美遷移至高頻率的車輛派單、訂單狀態即時動態變更等物流調度場景。
+### 📌 1. Python FastAPI 高並發 Webhook 與即時狀態機調度
+* **問題背景**：在串接通訊平台（LINE Developers）與後端 AI 模型時，高流量高並發的 Webhook 請求容易造成後端阻塞，導致用戶端體驗延遲。
+* **解決方案**：利用 FastAPI 的 `async/await` 非同步事件循環（Event Loop），架設低延遲的 Webhook 伺服器；後端引入狀態機（State Machine）設計模式，將繁重的文本生成或資料運算抽離至背景排程（Background Tasks）。此全端非同步架構經驗，能完美遷移至高頻率的車輛派單、訂單狀態即時動態變更等物流調度場景。
 
-📌 2. 行動端高頻率 GPS 背景追蹤與抗災離線機制 (Mobility & Geo-tracking)
-問題背景：在開發地理定位 App 時，最棘手的挑戰是行動裝置進入背景（Background）後，常遭作業系統（如 Android Doze Mode）因省電機制強行中斷定位；且車輛行經訊號微弱之盲區（如隧道、山區）時，定位資料易遺失。
+### 📌 2. 行動端高頻率 GPS 背景追蹤與抗災離線機制 (Mobility & Geo-tracking)
+* **問題背景**：在開發地理定位 App 時，最棘手的挑戰是行動裝置進入背景（Background）後，常遭作業系統（如 Android Doze Mode）因省電機制強行中斷定位；且車輛行經訊號微弱之盲區（如隧道、山區）時，定位資料易遺失。
+* **解決方案**：
+  * **背景存存活優化**：透過原生 Foreground Service 結合 WakeLock 封裝 `geolocator`，並妥善處理雙平台定位權限的漸進式引導。
+  * **資料抗災重傳**：設計「離線快取機制」。當系統偵測到網路斷線（`connectivity_plus`）時，GPS 軌跡數據不會遺失，而是即時寫入本地輕量型資料庫 `Sembast`；當網路恢復連線時，再透過佇列（Queue）機制自動延遲補傳（Backoff Retry）至雲端，確保軌跡資料 100% 完整性。
 
-解決方案：
+### 📌 3. 雙平台商店上架管理與生態圈應變
+* **問題背景**：面對 Apple 審查規範中的隱私權宣告，以及 Android targetSdkVersion 權限變更，硬體權限（如 Background GPS）常因標示或配置不全導致商店退件。
+* **解決方案**：透過重新梳理 `Permission_handler` 的引導流程，在用戶初次觸發核心功能前，設計「前置型權限說明彈窗（Pre-permission Dialog）」，不僅成功通過商店審查，更將用戶權限開啟率提升了 25%。
 
-背景存活優化：透過原生 Foreground Service 結合 WakeLock 封裝 geolocator，並妥善處理雙平台定位權限的漸進式引導。
+### 📌 4. 前端狀態管理與動態 UI 記憶體回收 (Riverpod AutoDispose)
+* **問題背景**：在面臨多重非同步數據流（如即時地圖坐標串流、即時對話流）時，若未妥善管理 Lifecycle，極易造成 Widget 頻繁 Rebuild 導致卡頓與耗電。
+* **解決方案**：運用 `Provider.autoDispose` 結合異步監聽鏈，在用戶切換離開核心頁面時，主動回收非同步記憶體、清空暫存並關閉輸入 UI，從根本杜絕 Memory Leak，維持 App 60 FPS 的絲滑流暢度。
 
-資料抗災重傳：設計 「離線快取機制」。當系統偵測到網路斷線（connectivity_plus）時，GPS 軌跡數據不會遺失，而是即時寫入本地輕量型資料庫 Sembast；當網路恢復連線時，再透過佇列（Queue）機制自動延遲補傳（Backoff Retry）至雲端，確保軌跡資料 100% 完整性。
+---
 
-📌 3. 雙平台商店上架管理與生態圈應變
-實務經驗：熟知 Apple 審查規範中的隱私權宣告，以及 Android targetSdkVersion 權限變更。
+## 📈 2026 技術擴展與持續演進 (Future Outlook)
 
-應變案例：曾遇過因硬體權限（Background GPS）導致的商店退件，我透過重新梳理 Permission_handler 的引導流程，在用戶初次觸發核心功能前，設計「前置型權限說明彈窗（Pre-permission Dialog）」，不僅成功通過商店審查，更將用戶權限開啟率提升了 25%。
-
-📌 4. 前端狀態管理與動態 UI 記憶體回收 (Riverpod AutoDispose)
-實務經驗：在面臨多重非同步數據流（如即時地圖坐標串流、即時對話流）時，若未妥善管理 Lifecycle，極易造成 Widget 頻繁 Rebuild 導致卡頓與耗電。我運用 Provider.autoDispose 結合異步監聽鏈，在用戶切換離開核心頁面時，主動回收非同步記憶體、清空暫存並關閉輸入 UI，從根本杜絕 Memory Leak，維持 App 60 FPS 的絲滑流暢度。
-
-### 📈 2026 技術擴展與持續演進 (Future Outlook)
 我保持著對技術邊界的強烈好奇心，目前正在深化以下領域，旨在為未來的團隊帶來更多元的架構選擇：
 
-Modern Web Frontend: 深入研習 React.js 生態圈，將行動端的狀態管理與組件化思維無縫遷移至 Web 端，完備全場景開發實力。
+* **Modern Web Frontend**：深入研習 **React.js** 生態圈，將行動端的狀態管理與組件化思維無縫遷移至 Web 端，完備全場景開發實力。
+* **AI-Driven Engineering**：全面導入 **Claude Code** 等前沿 AI 輔助開發工具，優化並重構自動化開發工作流（AI-assisted workflow），將團隊的研發產出效率極大化。
 
-AI-Driven Engineering: 全面導入 Claude Code 等前沿 AI 輔助開發工具，優化並重構自動化開發工作流（AI-assisted workflow），將團隊的研發產出效率極大化。
+---
 
-### 📬 聯絡我 (Contact)
+## 📬 聯絡我 (Contact)
+
 如果您對我的全端架構設計、團隊協作思維或過往專案細節感興趣，非常歡迎透過以下管道與我聯絡，期待能與優秀的團隊共同打造改變市場的產品！
 
-Email: alex20021009@gmail.com
-
-GitHub: Jan's GitHub
+* **Email**：[alex20021009@gmail.com](mailto:alex20021009@gmail.com)
+* **GitHub**：[Jan's GitHub Profile](https://github.com/your-username)
