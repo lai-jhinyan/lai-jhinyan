@@ -117,4 +117,4 @@ Celery -- Save Processed Data --> SupaDB
 ## 聯絡方式 (Contact Information)
 
 - **Email**: alex20021009@gmail.com
-- **GitHub Profile**: [github.com/lai-jhinyan](https://github.com/lai-jhinyan)
+- **GitHub Profile**: [github.com/lai-jhinyan]([https://github.com/lai-jhinyan](https://github.com/lai-jhinyan/lai-jhinyan))
