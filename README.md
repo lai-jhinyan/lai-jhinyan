@@ -77,8 +77,6 @@ Celery -- Save Processed Data --> SupaDB
     API --> GCS
     Redis -. Push Result Notification .-> Push -.-> App
 
-    ---
-
 ### 【第二部分】實務案例研討、未來演進與聯絡資訊
 
 ## 實務案例研討 (Technical Case Studies)
