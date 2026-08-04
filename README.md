@@ -33,51 +33,50 @@
 - **Google Play Store**: [Google Play 下載連結](https://play.google.com/store/apps/details?id=com.hysia.pestologic&pcampaignid=web_share)
 
 ---
-
 ## 系統架構圖 (System Architecture)
 
+```mermaid
 graph TD
     subgraph Clients [Client Layer]
         App[Flutter Mobile App - iOS / Android]
         LineBot[LINE Official Account Bot]
     end
 
- subgraph BackendLayer [Backend & Async Pipeline]
+    subgraph BackendLayer [Backend & Async Pipeline]
         API[FastAPI Async Gateway]
         Guard[AI Risk Guardrails Engine]
         Celery[Celery Distributed Task Queue]
         Redis[(Redis Cache / PubSub Broker)]
     end
 
-subgraph AIEngine [AI & Machine Learning Services]
+    subgraph AIEngine [AI & Machine Learning Services]
         OpenAI[OpenAI GPT-4o / Vision API]
         Ollama[Local Ollama LLM Instance]
         YOLO[YOLO Object Detection Pipeline]
     end
 
-subgraph Infrastructure [Cloud Infrastructure & Storage]
+    subgraph Infrastructure [Cloud Infrastructure & Storage]
         SupaDB[(Supabase / PostgreSQL)]
         GCS[Google Cloud Storage]
         Push[Firebase FCM Push Notifications]
     end
 
-App -- REST API / IAP Receipts --> API
+    App -- REST API / IAP Receipts --> API
     LineBot -- Webhook Events --> API
     
-API --> Guard
+    API --> Guard
     Guard -- Safe Processing --> Celery
     Guard -- Crisis Override --> API
     
-Celery <--> Redis
+    Celery <--> Redis
     Celery --> OpenAI
     Celery --> Ollama
     API --> YOLO
 
-Celery -- Save Processed Data --> SupaDB
+    Celery -- Save Processed Data --> SupaDB
     API --> GCS
     Redis -. Push Result Notification .-> Push -.-> App
-
-### 【第二部分】實務案例研討、未來演進與聯絡資訊
+```
 
 ## 實務案例研討 (Technical Case Studies)
 
